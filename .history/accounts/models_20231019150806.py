@@ -1,9 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
-from imagekit.models import ImageSpecField
-from pilkit.processors import ResizeToFill
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 
 
 class MyUserManager(BaseUserManager):
@@ -43,14 +39,14 @@ class MyUser(AbstractBaseUser):
         max_length=255,
         unique=True,
     )
-    entries = models.IntegerField(default=0)
+    date_of_birth = 
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
     objects = MyUserManager()
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ["date_of_birth"]
 
     def __str__(self):
         return self.email
@@ -70,29 +66,3 @@ class MyUser(AbstractBaseUser):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
         return self.is_admin
-    
-    
-class UserProfile(models.Model):
-    avatar = models.ImageField(upload_to="avatars/", blank=True, null=True)
-    avatar_thumbnail = ImageSpecField(
-        source="avatar",
-        processors=[ResizeToFill(360, 360)],
-        format="JPEG",
-        options={"quality": 80},
-    )
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    phone = models.CharField(max_length=32)
-    user = models.OneToOneField(MyUser, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=30, null=True)
-    last_name = models.CharField(max_length=30, null=True)
-
-    def __str__(self):
-        return f"{self.first_name} {self.last_name}"
-
-    @receiver(post_save, sender=MyUser)
-    def create_user_profile(sender, instance, created, **kwargs):
-        if created:
-            UserProfile.objects.create(user=instance)
-    
-    

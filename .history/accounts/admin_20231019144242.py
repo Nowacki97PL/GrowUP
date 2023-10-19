@@ -45,7 +45,7 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = MyUser
-        fields = ["email", "password", "entries", "is_active", "is_admin"]
+        fields = ["email", "password", "is_active", "is_admin"]
 
 
 class UserAdmin(BaseUserAdmin):
@@ -81,7 +81,7 @@ class UserAdmin(BaseUserAdmin):
 
 # Now register the new UserAdmin...
 admin.site.register(MyUser, UserAdmin)
-admin.site.register(UserProfile)
 # ... and, since we're not using Django's built-in permissions,
 # unregister the Group model from admin.
 admin.site.unregister(Group)
+admin.site.register(UserProfile)

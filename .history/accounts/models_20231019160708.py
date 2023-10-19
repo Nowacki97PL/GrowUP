@@ -1,9 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
-from imagekit.models import ImageSpecField
-from pilkit.processors import ResizeToFill
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 
 
 class MyUserManager(BaseUserManager):
@@ -73,7 +69,7 @@ class MyUser(AbstractBaseUser):
     
     
 class UserProfile(models.Model):
-    avatar = models.ImageField(upload_to="avatars/", blank=True, null=True)
+    avatar = models.ImageField(upload_to="media/avatars/", blank=True, null=True)
     avatar_thumbnail = ImageSpecField(
         source="avatar",
         processors=[ResizeToFill(360, 360)],
@@ -86,6 +82,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(MyUser, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=30, null=True)
     last_name = models.CharField(max_length=30, null=True)
+    entries_to_gym = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"

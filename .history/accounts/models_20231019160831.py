@@ -86,6 +86,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(MyUser, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=30, null=True)
     last_name = models.CharField(max_length=30, null=True)
+    entries_to_gym = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"

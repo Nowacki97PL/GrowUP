@@ -16,14 +16,14 @@ class UserCreationForm(forms.ModelForm):
 
     class Meta:
         model = MyUser
-        fields = ["email",]
+        fields = ["email", "date_of_birth"]
 
     def clean_password2(self):
         # Check that the two password entries match
         password1 = self.cleaned_data.get("password1")
         password2 = self.cleaned_data.get("password2")
         if password1 and password2 and password1 != password2:
-            raise ValidationError("Hasła nie pasują do siebie.")
+            raise ValidationError("Passwords don't match")
         return password2
 
     def save(self, commit=True):
@@ -45,7 +45,7 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = MyUser
-        fields = ["email", "password", "entries", "is_active", "is_admin"]
+        fields = ["email", "password", "date_of_birth", "is_active", "is_admin"]
 
 
 class UserAdmin(BaseUserAdmin):
@@ -56,11 +56,11 @@ class UserAdmin(BaseUserAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    list_display = ["email", "entries", "is_admin"]
+    list_display = ["email", "date_of_birth", "is_admin"]
     list_filter = ["is_admin"]
     fieldsets = [
         (None, {"fields": ["email", "password"]}),
-        ("Personal info", {"fields": ["entries"]}),
+        ("Personal info", {"fields": ["date_of_birth"]}),
         ("Permissions", {"fields": ["is_admin"]}),
     ]
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
@@ -70,7 +70,7 @@ class UserAdmin(BaseUserAdmin):
             None,
             {
                 "classes": ["wide"],
-                "fields": ["email", "entries", "password1", "password2"],
+                "fields": ["email", "date_of_birth", "password1", "password2"],
             },
         ),
     ]
@@ -81,7 +81,7 @@ class UserAdmin(BaseUserAdmin):
 
 # Now register the new UserAdmin...
 admin.site.register(MyUser, UserAdmin)
-admin.site.register(UserProfile)
 # ... and, since we're not using Django's built-in permissions,
 # unregister the Group model from admin.
 admin.site.unregister(Group)
+admin.site.register(UserProfile)
