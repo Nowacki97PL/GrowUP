@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Umów trening
+{% endblock %}
+
+{% block content %}
+  <div class="container mx-auto">
+        <h1 class="text-center text-dark mt-5">Rezerwacja treningu</h1>
+
+
+        <form method="post" class="row g-3 ">
+            {% csrf_token %}
+            <div class="card mx-auto p-5 mt-5 border-secondary border-2 shadow"
+                 style="width: 80%; font-size: 16px; font-weight: bold">
+                <div class="row g-3">
+                    <div class="col-md-12 position-relative">
+                        <label class="form-label">Wybierz trenera</label>
+                        {{ form.trainer }}
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label class="form-label">Data</label>
+                        {{ form.date }}
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <label class="form-label">Godzina</label>
+                        {{ form.hour }}
+                    </div>
+                    <br><br>
+                    <div class="col-md-4 position-relative">
+                        <label class="form-label">Usługa</label>
+                        {{ form.services }}
+                    </div>
+                    <div class="col-md-4 mx-auto text-md-end">
+                        <button class="btn btn-dark" type="submit">Rezerwuj</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <br>
+    </div>
+{% endblock %}
