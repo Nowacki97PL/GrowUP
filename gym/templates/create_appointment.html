@@ -21,10 +21,11 @@ Umów trening
                     <div class="col-md-4 position-relative">
                         <label class="form-label">Data</label>
                         {{ form.date }}
+                        {{ form.errors }}
                     </div>
                     <div class="col-md-4 position-relative">
                         <label class="form-label">Godzina</label>
-                        {{ form.hour }}
+                        {{ form.chosen_hour }}
                     </div>
                     <br><br>
                     <div class="col-md-4 position-relative">

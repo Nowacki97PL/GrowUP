@@ -2,7 +2,7 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView
 
 from gym.forms import TrainerAppointmentForm
-from gym.models import TrainerAppointment
+from gym.models import TrainerAppointment, WorkingHour
 
 
 class HomeView(TemplateView):
@@ -25,5 +25,5 @@ class TrainerAppointmentCreate(CreateView):
 
             return super().form_valid(form)
         else:
-            form.add_error(None, "Nie masz wystarczającej liczby 'entries'. Zakup proszę pakiet.")
+            form.add_error(None, "Nie masz pakietu treningów. Zakup proszę pakiet.")
             return self.form_invalid(form)
