@@ -1,0 +1,14 @@
+body {
+            height: 100%;
+        }
+#green {
+            height: 100vh;
+            background: #9fa19f;
+            text-align: center;
+            color: black;
+            padding: 15px;
+        }
+
+#NaVbar {
+    background-color: #1da41d;
+}
