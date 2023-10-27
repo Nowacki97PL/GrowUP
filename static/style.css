@@ -12,3 +12,25 @@ body {
 #NaVbar {
     background-color: #1da41d;
 }
+
+.home__description {
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    color: black;
+}
+
+.trainer__appointment {
+    text-decoration: none;
+    background: #9fa19f;
+    border-radius: 8px;
+    border: 2px solid #9fa19f;
+    color: #1da41d;
+    cursor: pointer;
+}
+
+.trainer__appointment:hover,
+.trainer__appointment:active {
+    background: #1da41d;
+    color: #9fa19f;
+}
