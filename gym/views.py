@@ -14,7 +14,7 @@ class TrainerAppointmentCreate(CreateView):
     model = TrainerAppointment
     form_class = TrainerAppointmentForm
     template_name = 'create_appointment.html'
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("confirm_reservation", kwargs={"id": 0})
 
     def form_valid(self, form):
         date = form.cleaned_data['date']
@@ -32,7 +32,8 @@ class TrainerAppointmentCreate(CreateView):
 
         if self.request.user.entries > 0:
             form.instance.user = self.request.user
-            form.save()
+            reservation = form.save()
+            self.success_url = reverse_lazy("confirm_reservation", kwargs={"id": reservation.id})
 
             self.request.user.entries -= 1
             self.request.user.save()
@@ -41,3 +42,14 @@ class TrainerAppointmentCreate(CreateView):
         else:
             form.add_error(None, "Nie masz pakietu treningów. Proszę wykup pakiet.")
             return self.form_invalid(form)
+
+
+class RentConfirmationView(TemplateView):
+    template_name = "confirm_reservation.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        reservation_id = self.kwargs.get("id")
+        reservation = TrainerAppointment.objects.get(pk=reservation_id)
+        context["reservation"] = reservation
+        return context

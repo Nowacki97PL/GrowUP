@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container mx-auto">
+        <h1 class="text-center text-dark mt-5">Potwierdzenie Rezerwacji</h1>
+
+        <div class="card mx-auto p-5 mt-5 border-secondary border-2 shadow"
+             style="width: 80%; font-size: 16px; font-weight: bold">
+            <p>Dziękujemy! Twoja rezerwacja została potwierdzona.</p>
+            <p>Trener: {{ reservation.trainer }}</p>
+            <p>Data: {{ reservation.date }}</p>
+            <p>Godzina: {{ reservation.hour }}</p>
+            <p>Usługa: {{ reservation.services.name }}</p>
+            <a class="btn btn-secondary" href="{% url 'home' %}">Powrót</a>
+        </div>
+    </div>
+{% endblock %}
