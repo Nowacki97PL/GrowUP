@@ -1,6 +1,6 @@
 from django.db import models
 from accounts.models import UserProfile, MyUser
-from gym.choices import type_job, working_hours
+from gym.choices import type_job
 
 
 class BaseModel(models.Model):
@@ -11,18 +11,9 @@ class BaseModel(models.Model):
         abstract = True
 
 
-class WorkingHour(models.Model):
-    time = models.CharField(max_length=10, unique=True, null=True)
-    is_available = models.BooleanField(default=True)
-
-    def __str__(self):
-        return self.time
-
-
 class Trainer(BaseModel):
     trainer = models.ForeignKey(UserProfile, on_delete=models.CASCADE, null=True)
     job = models.CharField(max_length=32, choices=type_job)
-    working_hours = models.ManyToManyField(WorkingHour, related_name='trainers', null=True)
 
     def __str__(self):
         return f"{self.trainer.first_name} {self.trainer.last_name} - {self.job}"
@@ -38,7 +29,7 @@ class TrainerServices(models.Model):
 
 class Appointment(BaseModel):
     date = models.DateField()
-    chosen_hour = models.ForeignKey(WorkingHour, on_delete=models.CASCADE, null=True)
+    hour = models.TimeField()
 
 
 class TrainerAppointment(Appointment):
@@ -48,5 +39,3 @@ class TrainerAppointment(Appointment):
 
     def __str__(self):
         return f"{self.user}-{self.services}"
-
-
