@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Trener
+{% endblock %}
+
+{% block content %}
+
+<div class="col-md-8 align-self-stretch">
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card shadow">
+                <div class="image-container">
+                    {% if trainer.avatar %}
+                        <img src="{{ trainer.avatar.url }}" class="card-img-top"
+                             alt="Trainer Image">
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ trainer.trainer.first_name }} {{ trainer.trainer.last_name }} {{ trainer.job }}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

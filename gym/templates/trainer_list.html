@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Trenerzy
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <h2>Nasi trenerzy</h2>
+        {% if trainers %}
+            {% for trainer in trainers %}
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow">
+                        <div class="image-container">
+                            {% if trainer.avatar %}
+                                <img src="{{ trainer.avatar.url }}" class="card-img-top"
+                                     alt="{{ trainer.trainer.first_name }} {{ trainer.trainer.last_name }}">
+                            {% endif %}
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ trainer.trainer.first_name }} {{ trainer.trainer.last_name }}</h5>
+                            <a href="{% url 'trainer_detail' trainer.id %}" class="btn btn-dark">Szczegóły</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="col">
+                <p>Brak postów.</p>
+            </div>
+        {% endif %}
+    </div>
+    </div>
+{% endblock %}

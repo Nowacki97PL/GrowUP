@@ -53,8 +53,8 @@
                                 Strona Główna
                             </a>
                             <a class="nav-item nav-link" href="#">Sklep</a>
-                            <a class="nav-item nav-link" href="#">Kadra</a>
-                            <a class="nav-item nav-link" href="#">Blog</a>
+                            <a class="nav-item nav-link" href="{% url 'trainers' %}">Kadra</a>
+                            <a class="nav-item nav-link" href="{% url 'blog:posts' %}">Blog</a>
 
                              {% if user.is_authenticated %}
                                 <a href="{% url 'accounts:logout' %}" class="d-block text-light">Wyloguj się</a>

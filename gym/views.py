@@ -1,9 +1,9 @@
 from django.core.exceptions import ValidationError
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, CreateView
+from django.views.generic import TemplateView, CreateView, ListView, DetailView
 
 from gym.forms import TrainerAppointmentForm
-from gym.models import TrainerAppointment
+from gym.models import TrainerAppointment, Trainer
 
 
 class HomeView(TemplateView):
@@ -53,3 +53,14 @@ class RentConfirmationView(TemplateView):
         reservation = TrainerAppointment.objects.get(pk=reservation_id)
         context["reservation"] = reservation
         return context
+
+
+class TrainersList(ListView):
+    model = Trainer
+    template_name = 'trainer_list.html'
+    context_object_name = 'trainers'
+
+
+class TrainerDetail(DetailView):
+    model = Trainer
+    template_name = 'trainer_detail.html'

@@ -1,4 +1,8 @@
 from django.db import models
+from django.db.models import ImageField
+from imagekit.models import ImageSpecField
+from pilkit.processors import ResizeToFill
+
 from accounts.models import UserProfile, MyUser
 from gym.choices import type_job
 
@@ -12,6 +16,13 @@ class BaseModel(models.Model):
 
 
 class Trainer(BaseModel):
+    avatar = ImageField(upload_to="avatars/", null=True, blank=True)
+    avatar_thumbnail = ImageSpecField(
+        source="avatar",
+        processors=[ResizeToFill(125, 200)],
+        format="JPEG",
+        options={"quality": 100},
+    )
     trainer = models.ForeignKey(UserProfile, on_delete=models.CASCADE, null=True)
     job = models.CharField(max_length=32, choices=type_job)
 

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Posty
+{% endblock %}
+
+{% block content %}
+<div class="col-md-8 align-self-stretch">
+                <h2 class="text-dark">Blog:</h2>
+                <div class="row">
+                    {% if posts %}
+                        {% for post in posts %}
+                            <div class="col-md-6 mb-4">
+                                <div class="card shadow">
+                                    <div class="image-container">
+                                        {% if post.avatar %}
+                                            <img src="{{ post.avatar.url }}" class="card-img-top"
+                                                 alt="{{ post.title }}">
+                                        {% endif %}
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ post.title }}</h5>
+                                        <a href="{% url 'blog:post_detail' post.id %}" class="btn btn-dark">Szczegóły</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="col">
+                            <p>Brak postów.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+{% endblock %}
