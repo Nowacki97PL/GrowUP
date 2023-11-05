@@ -25,6 +25,7 @@ class Trainer(BaseModel):
     )
     trainer = models.ForeignKey(UserProfile, on_delete=models.CASCADE, null=True)
     job = models.CharField(max_length=32, choices=type_job)
+    description = models.TextField(null=True)
 
     def __str__(self):
         return f"{self.trainer.first_name} {self.trainer.last_name} - {self.job}"
