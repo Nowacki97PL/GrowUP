@@ -2,8 +2,8 @@ from django.core.exceptions import ValidationError
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView, ListView, DetailView
 
-from gym.forms import TrainerAppointmentForm
-from gym.models import TrainerAppointment, Trainer
+from gym.forms import TrainerAppointmentForm, MentalTrainerAppointmentForm, DietitianAppointmentForm
+from gym.models import TrainerAppointment, Trainer, MentalTrainerAppointment, DietitianAppointment
 
 
 class HomeView(TemplateView):
@@ -44,6 +44,20 @@ class TrainerAppointmentCreate(CreateView):
             return self.form_invalid(form)
 
 
+class MentalTrainerAppointmentCreate(CreateView):
+    model = MentalTrainerAppointment
+    form_class = MentalTrainerAppointmentForm
+    template_name = 'create_appointment.html'
+    success_url = reverse_lazy("confirm_reservation", kwargs={"id": 0})
+
+
+class DietitianAppointmentCreate(CreateView):
+    model = DietitianAppointment
+    form_class = DietitianAppointmentForm
+    template_name = 'create_appointment.html'
+    success_url = reverse_lazy("confirm_reservation", kwargs={"id": 0})
+
+
 class RentConfirmationView(TemplateView):
     template_name = "confirm_reservation.html"
 
@@ -53,6 +67,23 @@ class RentConfirmationView(TemplateView):
         reservation = TrainerAppointment.objects.get(pk=reservation_id)
         context["reservation"] = reservation
         return context
+
+
+class ChooseSpecialistView(TemplateView):
+    template_name = 'choose_specialist.html'
+
+    def post(self, request, *args, **kwargs):
+        specialist_choice = request.POST.get('specialist_choice')
+
+        if specialist_choice == '1':
+            return reverse_lazy('create_appointment')
+        elif specialist_choice == '2':
+            return reverse_lazy('create_mental-trainer_appointment')
+        elif specialist_choice == '3':
+            return reverse_lazy('create_dietitian_appointment')
+        else:
+            # Obsłuż sytuację, gdy wybór jest nieprawidłowy
+            return self.render_to_response({'error': 'Nieprawidłowy wybór'})
 
 
 class TrainersList(ListView):

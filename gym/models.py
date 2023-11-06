@@ -30,6 +30,22 @@ class Trainer(BaseModel):
     def __str__(self):
         return f"{self.trainer.first_name} {self.trainer.last_name} - {self.job}"
 
+    class Meta:
+        verbose_name = "Trener personalny"
+        verbose_name_plural = "Trenerzy personalni"
+
+
+class MentalTrainer(Trainer):
+    class Meta:
+        verbose_name = "Trener mentalny"
+        verbose_name_plural = "Trenerzy mentalni"
+
+
+class Dietitian(Trainer):
+    class Meta:
+        verbose_name = "Dietetyk"
+        verbose_name_plural = "Dietetycy"
+
 
 class TrainerServices(models.Model):
     name = models.CharField(max_length=64)
@@ -37,6 +53,34 @@ class TrainerServices(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = "Usługa trenera"
+        verbose_name_plural = "Usługi trenera personalnego"
+
+
+class MentalTrainerServices(models.Model):
+    name = models.CharField(max_length=64)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Usługa trenera mentalnego"
+        verbose_name_plural = "Usługi trenera mentalnego"
+
+
+class DietitianServices(models.Model):
+    name = models.CharField(max_length=64)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Usługa dietetyka"
+        verbose_name_plural = "Usługi dietetyków"
 
 
 class Appointment(BaseModel):
@@ -51,3 +95,33 @@ class TrainerAppointment(Appointment):
 
     def __str__(self):
         return f"{self.user}-{self.services}"
+
+    class Meta:
+        verbose_name = "Rezerwacja usługi trenera"
+        verbose_name_plural = "Rezerwacja usługi trenera personalnego"
+
+
+class MentalTrainerAppointment(Appointment):
+    trainer = models.ForeignKey(MentalTrainer, on_delete=models.CASCADE)
+    services = models.ForeignKey(MentalTrainerServices, on_delete=models.CASCADE)
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.user}-{self.services}"
+
+    class Meta:
+        verbose_name = "Rezerwacja usługi trenera mentalnego"
+        verbose_name_plural = "Rezerwacja usługi trenera mentalnego"
+
+
+class DietitianAppointment(Appointment):
+    trainer = models.ForeignKey(Dietitian, on_delete=models.CASCADE)
+    services = models.ForeignKey(DietitianServices, on_delete=models.CASCADE)
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.user}-{self.services}"
+
+    class Meta:
+        verbose_name = "Rezerwacja usługi dietetyka"
+        verbose_name_plural = "Rezerwacja usługi dietetyka"

@@ -70,6 +70,10 @@ class MyUser(AbstractBaseUser):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
         return self.is_admin
+
+    class Meta:
+        verbose_name = "Użytkownik"
+        verbose_name_plural = "Użytkownicy"
     
     
 class UserProfile(models.Model):
@@ -94,5 +98,7 @@ class UserProfile(models.Model):
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
             UserProfile.objects.create(user=instance)
-    
-    
+
+    class Meta:
+        verbose_name = "Profil użytkownika"
+        verbose_name_plural = "Profile użytkowników"

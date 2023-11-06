@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Umów trening
+Umów usługę
 {% endblock %}
 
 {% block content %}
   <div class="container mx-auto">
-        <h1 class="text-center text-dark mt-5">Rezerwacja treningu</h1>
+        <h1 class="text-center text-dark mt-5">Rezerwacja usługi</h1>
 
 
         <form method="post" class="row g-3 ">
@@ -15,7 +15,7 @@ Umów trening
                  style="width: 80%; font-size: 16px; font-weight: bold">
                 <div class="row g-3">
                     <div class="col-md-12 position-relative">
-                        <label class="form-label">Wybierz trenera</label>
+                        <label class="form-label">Wybierz trenera/dietetyka</label>
                         {{ form.trainer }}
                     </div>
                     <div class="col-md-4 position-relative">

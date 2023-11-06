@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Wybór specjalizacji
+{% endblock %}
+
+{% block content %}
+<form method="post" action="{% url 'choose_specialist' %}">
+  {% csrf_token %}
+  <label for="specialist_choice">Wybierz specjalistę:</label>
+  <select name="specialist_choice" id="specialist_choice">
+    <option value="1">Trener personalny</option>
+    <option value="2">Trener mentalny</option>
+    <option value="3">Dietetyk</option>
+  </select>
+  <button type="submit">Wybierz</button>
+</form>
+
+{% endblock %}

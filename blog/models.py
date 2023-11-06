@@ -15,6 +15,10 @@ class BaseModel(models.Model):
 class Image(BaseModel):
     avatar = models.ImageField(upload_to="media/post-images", blank=True, null=True)
 
+    class Meta:
+        verbose_name = "Zdjęcia do postu"
+        verbose_name_plural = "Zdjęcia do postów"
+
 
 class Post(BaseModel):
     avatar = models.ImageField(upload_to="media/", blank=True, null=True)
@@ -30,3 +34,7 @@ class Post(BaseModel):
 
     def __str__(self):
         return f"{self.title}"
+
+    class Meta:
+        verbose_name = "Post"
+        verbose_name_plural = "Posty"
