@@ -87,7 +87,6 @@ class ChooseSpecialistView(View):
         elif specialist_choice == '3':
             return redirect('create_dietitian_appointment')
         else:
-            # Obsłuż sytuację, gdy wybór jest nieprawidłowy
             return render(request, self.template_name, {'error': 'Nieprawidłowy wybór'})
 
 
