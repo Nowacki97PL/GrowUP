@@ -1,5 +1,7 @@
 from django.core.exceptions import ValidationError
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
+from django.views.generic.base import View
 from django.views.generic import TemplateView, CreateView, ListView, DetailView
 
 from gym.forms import TrainerAppointmentForm, MentalTrainerAppointmentForm, DietitianAppointmentForm
@@ -54,7 +56,7 @@ class MentalTrainerAppointmentCreate(CreateView):
 class DietitianAppointmentCreate(CreateView):
     model = DietitianAppointment
     form_class = DietitianAppointmentForm
-    template_name = 'create_appointment.html'
+    template_name = 'create_dietitian_appointment.html'
     success_url = reverse_lazy("confirm_reservation", kwargs={"id": 0})
 
 
@@ -69,21 +71,24 @@ class RentConfirmationView(TemplateView):
         return context
 
 
-class ChooseSpecialistView(TemplateView):
+class ChooseSpecialistView(View):
     template_name = 'choose_specialist.html'
 
-    def post(self, request, *args, **kwargs):
+    def get(self, request):
+        return render(request, self.template_name)
+
+    def post(self, request):
         specialist_choice = request.POST.get('specialist_choice')
 
         if specialist_choice == '1':
-            return reverse_lazy('create_appointment')
+            return redirect('create_appointment')
         elif specialist_choice == '2':
-            return reverse_lazy('create_mental-trainer_appointment')
+            return redirect('create_mental-trainer_appointment')
         elif specialist_choice == '3':
-            return reverse_lazy('create_dietitian_appointment')
+            return redirect('create_dietitian_appointment')
         else:
             # Obsłuż sytuację, gdy wybór jest nieprawidłowy
-            return self.render_to_response({'error': 'Nieprawidłowy wybór'})
+            return render(request, self.template_name, {'error': 'Nieprawidłowy wybór'})
 
 
 class TrainersList(ListView):
