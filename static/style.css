@@ -1,6 +1,16 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
-            height: 100%;
-        }
+    display: inline-block;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100%;
+    margin: 0;
+}
+
 #green {
             height: 100vh;
             background: #9fa19f;
@@ -11,6 +21,7 @@ body {
 
 #NaVbar {
     background-color: #1da41d;
+    width: 100%;
 }
 
 .home__description {

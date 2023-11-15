@@ -5,15 +5,20 @@
 {% endblock %}
 
 {% block content %}
-<form method="post" action="{% url 'choose_specialist' %}">
-  {% csrf_token %}
-  <label for="specialist_choice">Wybierz specjalistę:</label>
-  <select name="specialist_choice" id="specialist_choice">
-    <option value="1">Trener personalny</option>
-    <option value="2">Trener mentalny</option>
-    <option value="3">Dietetyk</option>
-  </select>
-  <button type="submit">Wybierz</button>
-</form>
-
+    <div class="container mx-auto ">
+    <form method="post" action="{% url 'choose_specialist' %}">
+        {% csrf_token %}
+        <div class="card mx-auto p-5 mt-5 border-secondary border-2 shadow"
+                 style="width: 80%; font-size: 16px; font-weight: bold">
+        <label class="form-label" for="specialist_choice">Wybierz specjalistę:</label>
+        <select name="specialist_choice" id="specialist_choice">
+            <option class="value" value="1">Trener personalny</option>
+            <option value="2">Trener mentalny</option>
+            <option value="3">Dietetyk</option>
+        </select>
+        <button class="btn btn-dark mt-3"
+                style="width: 30%" type="submit">Wybierz</button>
+        </div>
+    </form>
+    </div>
 {% endblock %}
